@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Câu hỏi {{ question.id }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Câu {{ question.id }}:</h2>
+    <h2 style="font-weight: normal;">{{ question.question }}</h2>
+
+    <form method="POST">
+
+        {% for key, value in question.options.items() %}
+        <label class="option">
+            <input type="radio" name="answer" value="{{ key }}" required>
+            <b>{{ key }}.</b> {{ value }}
+        </label>
+        {% endfor %}
+
+        <div style="text-align:center; margin-top:20px;">
+            <button class="button" type="submit">Trả lời</button>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>
