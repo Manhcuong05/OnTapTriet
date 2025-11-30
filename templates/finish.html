@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kết quả cuối bài</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>🎉 Hoàn thành Quiz!</h1>
+
+    <h2>Kết quả của bạn</h2>
+
+    <p style="font-size:20px; text-align:center;">
+        ✔️ Đúng: <b>{{ correct }}</b> câu<br>
+        ❌ Sai: <b>{{ wrong }}</b> câu<br>
+        📘 Tổng: <b>{{ total }}</b> câu
+    </p>
+
+    <div style="text-align:center; margin-top:20px;">
+        <a href="/" class="button">🔁 Làm lại bài</a>
+    </div>
+</div>
+
+</body>
+</html>
