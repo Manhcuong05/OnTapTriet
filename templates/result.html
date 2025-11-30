@@ -9,10 +9,15 @@
 <div class="container">
 
     {% if correct %}
-        <h2 class="result-correct">✔️ Chính xác!</h2>
+        <h2 class="result-correct">🎉 Chính xác!</h2>
     {% else %}
         <h2 class="result-wrong">❌ Sai rồi!</h2>
-        <p style="text-align:center;">Đáp án đúng là: <b>{{ question.answer }}</b></p>
+
+        <p style="text-align:center; font-size:18px;">
+            Đáp án đúng là: 
+            <b>{{ question.answer }} – {{ question.options[question.answer] }}</b>
+        </p>
+
     {% endif %}
 
     <div style="text-align:center; margin-top:20px;">
