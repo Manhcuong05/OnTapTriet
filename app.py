@@ -1,21 +1,27 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from questions import questions
-import os
 
 app = Flask(__name__, static_folder="static")
-app.secret_key = "cuong-la-nhat"   # Secret key để dùng session
+
+# BẮT BUỘC phải có để dùng session
+app.secret_key = "my-secret-key-123"  
 
 
 @app.route("/")
 def index():
-    # Reset điểm mỗi lần làm mới
-    session["correct"] = 0
+    # Reset session khi vào trang chủ
     session["wrong"] = 0
     return render_template("index.html", total=len(questions))
 
 
 @app.route("/quiz/<int:q_id>", methods=["GET", "POST"])
 def quiz(q_id):
+
+    # Nếu user mới vào quiz hoặc refresh → đảm bảo tồn tại biến session
+    if "wrong" not in session:
+        session["wrong"] = 0
+
+    # Sai quá giới hạn (optional) → reset quiz
     if q_id > len(questions):
         return redirect(url_for("finish"))
 
@@ -23,18 +29,16 @@ def quiz(q_id):
 
     if request.method == "POST":
         user_answer = request.form.get("answer")
-        is_correct = (user_answer == question["answer"])
+        correct = (user_answer == question["answer"])
 
-        if is_correct:
-            session["correct"] += 1
-        else:
-            session["wrong"] += 1
+        if not correct:
+            session["wrong"] += 1  # tăng số câu sai
 
         return render_template(
             "result.html",
             question=question,
             user_answer=user_answer,
-            correct=is_correct,
+            correct=correct,
             next_id=q_id + 1
         )
 
@@ -43,16 +47,14 @@ def quiz(q_id):
 
 @app.route("/finish")
 def finish():
-    correct = session.get("correct", 0)
     wrong = session.get("wrong", 0)
-    total = correct + wrong
 
-    return render_template("finish.html",
-                           correct=correct,
-                           wrong=wrong,
-                           total=total)
+    return f"""
+    <h1>Bạn đã hoàn thành Quiz!</h1>
+    <p>Số câu sai: {wrong}</p>
+    <a href='/'>Làm lại</a>
+    """
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
