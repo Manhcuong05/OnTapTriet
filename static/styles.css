@@ -101,39 +101,3 @@ input[type="radio"] {
     border: 1px solid #ccc;
     background: #fff;
 }
-
-/* Question styles */
-.question-title {
-    text-align: left;
-    margin-bottom: 10px;
-}
-
-.question-text {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-.option {
-    display: block;
-    padding: 8px;
-    background: #fafafa;
-    margin-bottom: 8px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-}
-
-.button {
-    width: 100%;
-    padding: 12px;
-    background: #4285f4;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 17px;
-    cursor: pointer;
-    margin-top: 15px;
-}
-
-.button:hover {
-    opacity: 0.9;
-}
