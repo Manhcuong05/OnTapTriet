@@ -3,6 +3,7 @@
 <head>
     <title>Câu hỏi {{ question.id }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
     <style>
         .correct-option {
             border-color: #2ecc71 !important;
@@ -22,7 +23,7 @@
 
 <div class="container">
 
-    <!-- 🔽 Thông báo -->
+    <!-- 🔽 Thông báo kết quả -->
     {% if answered %}
         {% if correct %}
             <h2 class="result-correct">🎉 Chính xác!</h2>
@@ -35,8 +36,17 @@
         {% endif %}
     {% endif %}
 
-    <!-- 🔽 Dropdown chọn câu hỏi -->
-    <div style="text-align:right; margin-bottom:15px;">
+    <!-- 🔽 SCORE + DROPDOWN trên cùng -->
+    <div class="top-bar" style="display:flex; justify-content:space-between; margin-bottom:15px;">
+
+        <!-- ✔ Số câu đúng -->
+        <div class="score-box"
+            style="background:#f3e6ff; padding:10px 18px; border-radius:10px;
+                   border:1px solid #d7b3f3; font-weight:600; color:#5a1e8a;">
+            ✔ Đúng: {{ session.correct }}
+        </div>
+
+        <!-- 🔽 Chọn câu -->
         <select id="jumpTo" onchange="goToQuestion()" style="padding:6px; border-radius:6px;">
             {% for num in question_list %}
                 <option value="{{ num }}" {% if num == q_id %}selected{% endif %}>
@@ -65,7 +75,11 @@
         {% endif %}
 
         <label class="option {{ css }}">
-            <input type="radio" name="answer" value="{{ key }}" {% if answered %}disabled{% endif %} required>
+            <input type="radio"
+                   name="answer"
+                   value="{{ key }}"
+                   {% if answered %}disabled{% endif %}
+                   required>
             <b>{{ key }}.</b> {{ value }}
         </label>
         {% endfor %}
