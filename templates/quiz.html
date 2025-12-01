@@ -3,10 +3,37 @@
 <head>
     <title>Câu hỏi {{ question.id }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .correct-option {
+            border-color: #2ecc71 !important;
+            background: #e6ffe9 !important;
+        }
+        .wrong-option {
+            border-color: #e74c3c !important;
+            background: #ffe6e6 !important;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
+
+    <!-- 🔽 Thông báo -->
+    {% if answered %}
+        {% if correct %}
+            <h2 class="result-correct">🎉 Chính xác!</h2>
+        {% else %}
+            <h2 class="result-wrong">❌ Sai rồi!</h2>
+            <p style="text-align:center; font-size:18px;">
+                Đáp án đúng là:
+                <b>{{ question.answer }} – {{ question.options[question.answer] }}</b>
+            </p>
+        {% endif %}
+    {% endif %}
 
     <!-- 🔽 Dropdown chọn câu hỏi -->
     <div style="text-align:right; margin-bottom:15px;">
@@ -25,14 +52,30 @@
     <form method="POST">
 
         {% for key, value in question.options.items() %}
-        <label class="option">
-            <input type="radio" name="answer" value="{{ key }}" required>
+        {% set css = "" %}
+
+        {% if answered %}
+            {% if key == question.answer %}
+                {% set css = "correct-option disabled" %}
+            {% elif key == user_answer and not correct %}
+                {% set css = "wrong-option disabled" %}
+            {% else %}
+                {% set css = "disabled" %}
+            {% endif %}
+        {% endif %}
+
+        <label class="option {{ css }}">
+            <input type="radio" name="answer" value="{{ key }}" {% if answered %}disabled{% endif %} required>
             <b>{{ key }}.</b> {{ value }}
         </label>
         {% endfor %}
 
         <div style="text-align:center; margin-top:20px;">
-            <button class="button" type="submit">Trả lời</button>
+            {% if not answered %}
+                <button class="button" type="submit">Trả lời</button>
+            {% else %}
+                <a href="/quiz/{{ q_id + 1 }}" class="button">👉 Câu tiếp theo</a>
+            {% endif %}
         </div>
 
     </form>

@@ -10,7 +10,7 @@ app.secret_key = "my-secret-key-123"
 
 @app.route("/")
 def index():
-    # Reset khi bắt đầu lại quiz
+    # Reset điểm khi bắt đầu lại quiz
     session["correct"] = 0
     session["wrong"] = 0
     return render_template("index.html", total=len(questions))
@@ -23,7 +23,7 @@ def quiz(q_id):
     if q_id > len(questions):
         return redirect(url_for("finish"))
 
-    # Nếu session chưa có thì khởi tạo
+    # Nếu session chưa tồn tại thì tạo mới
     if "correct" not in session:
         session["correct"] = 0
     if "wrong" not in session:
@@ -31,7 +31,7 @@ def quiz(q_id):
 
     question = questions[q_id - 1]
 
-    # Nếu user submit đáp án
+    # User gửi đáp án
     if request.method == "POST":
         user_answer = request.form.get("answer")
         correct = (user_answer == question["answer"])
@@ -41,23 +41,24 @@ def quiz(q_id):
         else:
             session["wrong"] += 1
 
+        # Trả về lại trang quiz với UI đúng/sai
         return render_template(
-            "result.html",
+            "quiz.html",
             question=question,
+            q_id=q_id,
+            question_list=list(range(1, len(questions) + 1)),
+            answered=True,
             user_answer=user_answer,
-            correct=correct,
-            next_id=q_id + 1
+            correct=correct
         )
 
-    # Danh sách câu hỏi cho dropdown
-    question_list = list(range(1, len(questions) + 1))
-
-    # GET → hiện câu hỏi
+    # GET → hiển thị câu hỏi bình thường
     return render_template(
         "quiz.html",
         question=question,
         q_id=q_id,
-        question_list=question_list
+        question_list=list(range(1, len(questions) + 1)),
+        answered=False
     )
 
 
@@ -76,6 +77,6 @@ def finish():
 
 
 if __name__ == "__main__":
-    # Cấu hình chuẩn cho Render
+    # Cấu hình chuẩn cho Render / local
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
