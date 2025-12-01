@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Quiz Triết học</title>
+    <title>Quiz Triết học Mác - Lênin</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-<body>
+<body class="home-bg">
 
-<div class="container">
-    <h1>Quiz Triết học Mác - Lênin</h1>
-    <p style="text-align:center;">Có {{ total }} câu hỏi. Sẵn sàng chưa?</p>
+<div class="home-container">
 
-    <div style="text-align:center; margin-top:30px;">
-        <a href="/quiz/1" class="button">🚀 Bắt đầu làm bài</a>
+    <div class="logo-box">
+        <div class="logo-circle">
+            📘
+        </div>
+        <h1 class="title">Quiz Triết học Mác - Lênin</h1>
+        <p class="subtitle">Hệ thống ôn tập với {{ total }} câu hỏi</p>
     </div>
+
+    <div class="start-box">
+        <a href="/quiz/1" class="start-button">🚀 Bắt đầu làm bài</a>
+    </div>
+
 </div>
 
 </body>
