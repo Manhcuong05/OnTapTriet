@@ -79,3 +79,61 @@ input[type="radio"] {
     font-size: 28px;
     text-align: center;
 }
+/* Dropdown container */
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.dropdown-box {
+    background: #f7f7f7;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.dropdown {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 15px;
+    outline: none;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+/* Question styles */
+.question-title {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.question-text {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.option {
+    display: block;
+    padding: 8px;
+    background: #fafafa;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.button {
+    width: 100%;
+    padding: 12px;
+    background: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.button:hover {
+    opacity: 0.9;
+}

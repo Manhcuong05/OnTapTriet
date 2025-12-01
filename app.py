@@ -49,8 +49,16 @@ def quiz(q_id):
             next_id=q_id + 1
         )
 
+    # Danh sách câu hỏi cho dropdown
+    question_list = list(range(1, len(questions) + 1))
+
     # GET → hiện câu hỏi
-    return render_template("quiz.html", question=question, q_id=q_id)
+    return render_template(
+        "quiz.html",
+        question=question,
+        q_id=q_id,
+        question_list=question_list
+    )
 
 
 @app.route("/finish")

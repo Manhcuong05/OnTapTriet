@@ -7,6 +7,18 @@
 <body>
 
 <div class="container">
+
+    <!-- 🔽 Dropdown chọn câu hỏi -->
+    <div style="text-align:right; margin-bottom:15px;">
+        <select id="jumpTo" onchange="goToQuestion()" style="padding:6px; border-radius:6px;">
+            {% for num in question_list %}
+                <option value="{{ num }}" {% if num == q_id %}selected{% endif %}>
+                    Câu {{ num }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
     <h2>Câu {{ question.id }}:</h2>
     <h2 style="font-weight: normal;">{{ question.question }}</h2>
 
@@ -25,6 +37,13 @@
 
     </form>
 </div>
+
+<script>
+function goToQuestion() {
+    const id = document.getElementById("jumpTo").value;
+    window.location.href = "/quiz/" + id;
+}
+</script>
 
 </body>
 </html>
